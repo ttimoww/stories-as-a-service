@@ -44,7 +44,11 @@ function Generation({ data }: GenerationProps) {
     onSuccess: (id) => setStoryId(id),
   });
 
-  const { object: story, submit } = experimental_useObject({
+  const {
+    object: story,
+    submit,
+    isLoading,
+  } = experimental_useObject({
     api: storyId ? `/api/generate?storyId=${storyId}` : '',
     schema: generatedStorySchema,
   });
@@ -68,7 +72,7 @@ function Generation({ data }: GenerationProps) {
           {story?.title ?? <Skeleton className="h-[18px] w-3/4" />}
         </DialogTitle>
       </DialogHeader>
-      <div className="relative min-h-[500px]">
+      <div className="relative h-[75vh] max-h-[600px]">
         {story?.content ? (
           <p className="text-foreground leading-7">{story?.content}</p>
         ) : (
@@ -76,7 +80,7 @@ function Generation({ data }: GenerationProps) {
         )}
       </div>
       <DialogFooter>
-        <Button>Share</Button>
+        <Button disabled={!story?.content || isLoading}>Share</Button>
       </DialogFooter>
     </>
   );
