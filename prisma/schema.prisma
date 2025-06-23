@@ -10,16 +10,27 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
+enum Status {
+    PENDING
+    GENERATING
+    COMPLETED
+    FAILED
+}
+
+model Story {
     id        Int      @id @default(autoincrement())
-    name      String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    
+    status     Status   @default(PENDING)
+    title      String?
+    content    String?   @db.Text
+    
+    character  String
+    age        Int
 
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
-
-    @@index([name])
 }
 
 // Necessary for Next auth
@@ -58,7 +69,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    stories       Story[]
 }
 
 model VerificationToken {

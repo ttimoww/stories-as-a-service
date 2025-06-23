@@ -1,4 +1,4 @@
-import type { CreateStoryData } from '@/lib/schemas';
+import { generatedStorySchema, type CreateStoryData } from '@/lib/schemas';
 import {
   Dialog,
   DialogContent,
@@ -6,34 +6,69 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { experimental_useObject } from '@ai-sdk/react';
 import { api } from '@/trpc/react';
 import { useEffect } from 'react';
+import { Loader2Icon } from 'lucide-react';
 
 interface GenerateDialogProps
   extends Omit<React.ComponentProps<typeof Dialog>, 'children'> {
   data: CreateStoryData;
 }
 export function GenerateDialog({ data, ...props }: GenerateDialogProps) {
-  const { mutate: createStory, isPending } = api.story.create.useMutation();
+  const { mutate, isPending, data: storyId } = api.story.create.useMutation();
 
   useEffect(() => {
-    createStory(data);
-  }, []);
+    mutate(data);
+  }, [data, mutate]);
 
   return (
     <Dialog {...props}>
-      <DialogContent>
+      <DialogContent className="min-h-[500px]">
         <DialogHeader>
-          <DialogTitle>Generate Story</DialogTitle>
+          <DialogTitle>There&apos;s a story in the making...</DialogTitle>
           <DialogDescription>
-            LLM&apos;s are not free, so please login to continue
+            This is a story about {data.character} who is {data.age} years old.
           </DialogDescription>
         </DialogHeader>
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-        {isPending}
+        {isPending && <Loader2Icon className="mx-auto animate-spin" />}
+        {storyId && <StoryStream storyId={storyId} />}
       </DialogContent>
     </Dialog>
+  );
+}
+
+interface StoryStreamProps {
+  storyId: number;
+}
+function StoryStream({ storyId }: StoryStreamProps) {
+  const { object, submit, isLoading, stop } = experimental_useObject({
+    api: '/api/generate?storyId=' + storyId,
+    schema: generatedStorySchema,
+  });
+
+  console.log(object);
+
+  return (
+    <div>
+      <button
+        onClick={() => submit('Messages during finals week.')}
+        disabled={isLoading}
+      >
+        Generate notifications
+      </button>
+
+      {isLoading && (
+        <div>
+          <div>Loading...</div>
+          <button type="button" onClick={() => stop()}>
+            Stop
+          </button>
+        </div>
+      )}
+
+      <p className="text-lg font-bold">{object?.title}</p>
+      <p className="text-sm">{object?.story}</p>
+    </div>
   );
 }

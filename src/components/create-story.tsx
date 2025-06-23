@@ -74,7 +74,7 @@ export function CreateStory({ session, ...props }: CreateStoryProps) {
                   <FormItem>
                     <FormLabel>Main Character</FormLabel>
                     <FormControl>
-                      <Input placeholder="Joe" type="" {...field} />
+                      <Input placeholder="Joe" type="text" {...field} />
                     </FormControl>
                     <FormDescription>
                       Use your child&apos;s name for a personalised story
@@ -91,7 +91,13 @@ export function CreateStory({ session, ...props }: CreateStoryProps) {
                   <FormItem>
                     <FormLabel>Age</FormLabel>
                     <FormControl>
-                      <Input placeholder="7" type="number" {...field} />
+                      <Input
+                        placeholder="7"
+                        type="number"
+                        min={0}
+                        max={12}
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       We use this to determine the story&apos;s difficulty
