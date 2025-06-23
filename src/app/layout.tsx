@@ -11,7 +11,6 @@ import { SessionProvider } from 'next-auth/react';
 import { Header } from '@/components/shared/header';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { Footer } from '@/components/shared/footer';
-import { ThemeToggle } from '@/components/shared/theme-toggle';
 
 export const metadata: Metadata = {
   title: 'Story as a Service',

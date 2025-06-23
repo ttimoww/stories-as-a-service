@@ -7,7 +7,7 @@ export function usePathnameWithParams() {
 
   // Convert params object to URL path segments
   const pathSegments = Object.entries(params)
-    .map(([_, value]) => `/${value}`)
+    .map(([_, value]) => `/${String(value)}`)
     .join('');
 
   // Get search parameters as string

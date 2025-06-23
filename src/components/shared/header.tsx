@@ -4,12 +4,9 @@ import { Logout } from '@/components/shared/logout';
 import Link from 'next/link';
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { ThemeToggle } from '@/components/shared/theme-toggle';

@@ -25,6 +25,7 @@ export function LoginDialog({ ...props }: LoginDialogProps) {
       setLoading(true);
       await signIn('google', { callbackUrl: pathname });
     } catch (error) {
+      console.error(error);
       toast.error('Failed to sign in', {
         description: 'There was a problem signing in with. Please try again.',
       });

@@ -1,5 +1,4 @@
 'use client';
-import type { GeneratedStory } from '@/lib/schemas';
 import {
   CardDescription,
   CardFooter,
@@ -14,7 +13,9 @@ import { cn } from '@/lib/utils';
 import { api } from '@/trpc/react';
 import { LoadingOverlay } from '@/components/ui/loading-overlay';
 import { ReadStoryDialog } from '@/components/library/read-story-dialog';
+
 interface StoryListProps extends React.HTMLAttributes<HTMLDivElement> {}
+
 export function StoryList({ className, ...props }: StoryListProps) {
   const [stories] = api.story.getAll.useSuspenseQuery();
 
