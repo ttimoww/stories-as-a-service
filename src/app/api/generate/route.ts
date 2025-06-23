@@ -32,10 +32,33 @@ export async function POST(req: NextRequest) {
         return new Response('Story not found', { status: 404 });
     }
 
+    await db.story.update({
+        where: { id: parseInt(storyId) },
+        data: { status: 'GENERATING' },
+    });
+
     const result = streamObject({
         model: openai('gpt-4o'),
         schema: generatedStorySchema,
-        prompt: `Generate a bedtime story about ${story.character} who is ${story.age} years old. It should be fully readable in 5 minutes at a slow pace.`,
+        prompt: `Generate a bedtime story about ${story.character} who is ${story.age} years old. It should be fully readable in 20 seconds at a slow pace.`,
+        onFinish: async ({ object }) => {
+            if (!object) {
+                await db.story.update({
+                    where: { id: parseInt(storyId) },
+                    data: { status: 'FAILED' },
+                });
+
+                return;
+            }
+
+            await db.story.update({
+                where: { id: parseInt(storyId) },
+                data: {
+                    ...object,
+                    status: 'COMPLETED',
+                },
+            });
+        }
     });
 
     return result.toTextStreamResponse();

@@ -12,9 +12,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-interface ModeToggleProps
+interface ThemeToggleProps
   extends Omit<React.ComponentProps<typeof Button>, 'children' | 'size'> {}
-export function ModeToggle({ ...props }: ModeToggleProps) {
+export function ThemeToggle({ ...props }: ThemeToggleProps) {
   const { setTheme } = useTheme();
 
   return (

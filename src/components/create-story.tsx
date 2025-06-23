@@ -23,7 +23,7 @@ import {
   parseAsBoolean,
 } from 'nuqs';
 import { LoginDialog } from '@/components/login-dialog';
-import { GenerateDialog } from '@/components/generate-dialog';
+import { GenerateDialog } from '@/components/generate';
 import type { Session } from 'next-auth';
 import { createStorySchema } from '@/lib/schemas';
 

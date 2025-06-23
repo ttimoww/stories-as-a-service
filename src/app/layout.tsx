@@ -11,7 +11,7 @@ import { SessionProvider } from 'next-auth/react';
 import { Header } from '@/components/shared/header';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { Footer } from '@/components/shared/footer';
-import { ModeToggle } from '@/components/mode-toggle';
+import { ThemeToggle } from '@/components/shared/theme-toggle';
 
 export const metadata: Metadata = {
   title: 'Story as a Service',
@@ -43,11 +43,6 @@ export default function RootLayout({
           <SessionProvider>
             <TRPCReactProvider>
               <NuqsAdapter>
-                <ModeToggle
-                  variant="outline"
-                  className="absolute top-4 right-4"
-                />
-
                 <Header />
                 <div className="flex flex-1 flex-col">{children}</div>
                 <Footer />

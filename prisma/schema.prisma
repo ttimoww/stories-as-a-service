@@ -25,6 +25,7 @@ model Story {
     status     Status   @default(PENDING)
     title      String?
     content    String?   @db.Text
+    summary    String?   @db.Text
     
     character  String
     age        Int

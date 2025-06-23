@@ -15,7 +15,7 @@ export default async function Home() {
     <HydrateClient>
       <main className="flex flex-1 flex-col items-center justify-center gap-3 p-4">
         <h1 className="text-4xl font-bold">(Bedtime) Story as a Service ✨</h1>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground mb-4 text-sm">
           Create your own personalized bedtime story in seconds.
         </p>
         <CreateStory session={session} className="w-full max-w-xl" />

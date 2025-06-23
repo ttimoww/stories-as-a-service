@@ -1,7 +1,14 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { signOut } from 'next-auth/react';
 
-export function Logout() {
-  return <button onClick={() => signOut()}>Sign out</button>;
+interface LogoutProps
+  extends Omit<React.ComponentProps<typeof Button>, 'onClick'> {}
+export function Logout({ ...props }: LogoutProps) {
+  return (
+    <Button onClick={() => signOut()} {...props}>
+      Sign out
+    </Button>
+  );
 }
