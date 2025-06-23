@@ -13,8 +13,6 @@ export const generatedStorySchema = z.object({
     .string()
     .min(1)
     .max(256)
-    .describe(
-      'A short summary of the story no longer than 256 characters',
-    ),
+    .describe('A short summary of the story no longer than 256 characters'),
 });
 export type GeneratedStory = z.infer<typeof generatedStorySchema>;

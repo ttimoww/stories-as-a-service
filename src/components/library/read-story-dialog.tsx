@@ -19,7 +19,7 @@ export function ReadStoryDialog({ story, ...props }: ReadStoryDialogProps) {
       <DialogTrigger asChild>
         <Button {...props}>Read Story</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{story.title}</DialogTitle>
           <DialogDescription>{story.summary}</DialogDescription>

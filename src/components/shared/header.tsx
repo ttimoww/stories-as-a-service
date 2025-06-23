@@ -22,11 +22,6 @@ const links = [
     href: '/library',
     show: 'logged-in',
   },
-  {
-    label: 'Login',
-    href: '/',
-    show: 'logged-out',
-  },
 ];
 
 interface HeaderProps extends React.ComponentProps<'header'> {}
@@ -62,7 +57,7 @@ export async function Header({ className, ...props }: HeaderProps) {
       </NavigationMenu>
       <div className="flex items-center gap-2">
         {session && <Logout variant="outline" />}
-        <ThemeToggle variant="secondary" />
+        <ThemeToggle variant="outline" />
       </div>
     </header>
   );

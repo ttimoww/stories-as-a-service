@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-3 p-4">
       <h1 className="text-center text-4xl font-bold">
-        (Bedtime) Stories as a Service ✨
+        Stories as a Service ✨
       </h1>
       <p className="text-muted-foreground mb-4 text-center text-sm">
         Create your own personalized bedtime story in seconds.

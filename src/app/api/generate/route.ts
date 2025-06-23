@@ -9,57 +9,57 @@ import type { NextRequest } from 'next/server';
 export const maxDuration = 30;
 
 export async function POST(req: NextRequest) {
-    const searchParams = req.nextUrl.searchParams
-    const storyId = searchParams.get('storyId')
+  const searchParams = req.nextUrl.searchParams;
+  const storyId = searchParams.get('storyId');
 
-    const session = await auth()
+  const session = await auth();
 
-    if (!session) {
-        return new Response('Unauthorized', { status: 401 });
-    }
+  if (!session) {
+    return new Response('Unauthorized', { status: 401 });
+  }
 
-    if (!storyId) {
-        return new Response('Story ID is required', { status: 400 });
-    }
+  if (!storyId) {
+    return new Response('Story ID is required', { status: 400 });
+  }
 
-    const story = await db.story.findUnique({
-        where: {
-            id: parseInt(storyId),
-        },
-    });
+  const story = await db.story.findUnique({
+    where: {
+      id: parseInt(storyId),
+    },
+  });
 
-    if (!story) {
-        return new Response('Story not found', { status: 404 });
-    }
+  if (!story) {
+    return new Response('Story not found', { status: 404 });
+  }
 
-    await db.story.update({
+  await db.story.update({
+    where: { id: parseInt(storyId) },
+    data: { status: 'GENERATING' },
+  });
+
+  const result = streamObject({
+    model: openai('gpt-4o'),
+    schema: generatedStorySchema,
+    prompt: `Generate a bedtime story about ${story.character} who is ${story.age} years old. It should be fully readable in 20 seconds at a slow pace.`,
+    onFinish: async ({ object }) => {
+      if (!object) {
+        await db.story.update({
+          where: { id: parseInt(storyId) },
+          data: { status: 'FAILED' },
+        });
+
+        return;
+      }
+
+      await db.story.update({
         where: { id: parseInt(storyId) },
-        data: { status: 'GENERATING' },
-    });
+        data: {
+          ...object,
+          status: 'COMPLETED',
+        },
+      });
+    },
+  });
 
-    const result = streamObject({
-        model: openai('gpt-4o'),
-        schema: generatedStorySchema,
-        prompt: `Generate a bedtime story about ${story.character} who is ${story.age} years old. It should be fully readable in 20 seconds at a slow pace.`,
-        onFinish: async ({ object }) => {
-            if (!object) {
-                await db.story.update({
-                    where: { id: parseInt(storyId) },
-                    data: { status: 'FAILED' },
-                });
-
-                return;
-            }
-
-            await db.story.update({
-                where: { id: parseInt(storyId) },
-                data: {
-                    ...object,
-                    status: 'COMPLETED',
-                },
-            });
-        }
-    });
-
-    return result.toTextStreamResponse();
+  return result.toTextStreamResponse();
 }

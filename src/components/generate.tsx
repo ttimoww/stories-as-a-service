@@ -27,7 +27,7 @@ interface GenerateDialogProps
 export function GenerateDialog({ data, ...props }: GenerateDialogProps) {
   return (
     <Dialog {...props}>
-      <DialogContent className="min-h-[500px]">
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
         <Generation data={data} {...props} />
       </DialogContent>
     </Dialog>
@@ -67,18 +67,14 @@ function Generation({ data }: GenerationProps) {
         <DialogTitle>
           {story?.title ?? <Skeleton className="h-[18px] w-3/4" />}
         </DialogTitle>
-        <DialogDescription>
-          {story?.summary ?? <Skeleton className="h-[18px] w-1/2" />}
-        </DialogDescription>
       </DialogHeader>
-      {story?.content ? (
-        <p
-          className="text-foreground leading-7"
-          dangerouslySetInnerHTML={{ __html: story.content }}
-        />
-      ) : (
-        <Loader2Icon className="mx-auto animate-spin" />
-      )}
+      <div className="relative min-h-[500px]">
+        {story?.content ? (
+          <p className="text-foreground leading-7">{story?.content}</p>
+        ) : (
+          <Loader2Icon className="absolute top-1/2 left-1/2 mx-auto -translate-x-1/2 -translate-y-1/2 animate-spin" />
+        )}
+      </div>
       <DialogFooter>
         <Button>Share</Button>
       </DialogFooter>
