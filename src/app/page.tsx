@@ -7,14 +7,19 @@ export default async function Home() {
 
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-3 p-4">
-      <h1 className="text-4xl font-bold">(Bedtime) Story as a Service ✨</h1>
-      <p className="text-muted-foreground mb-4 text-sm">
+      <h1 className="text-center text-4xl font-bold">
+        (Bedtime) Stories as a Service ✨
+      </h1>
+      <p className="text-muted-foreground mb-4 text-center text-sm">
         Create your own personalized bedtime story in seconds.
       </p>
       <CreateStory session={session} className="w-full max-w-xl" />
       <p className="text-muted-foreground text-sm">
         See how it works on{' '}
-        <Link href="https://github.com/ttimoww" className="underline">
+        <Link
+          href="https://github.com/ttimoww/stories-as-a-service"
+          className="underline"
+        >
           Github
         </Link>
       </p>
