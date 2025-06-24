@@ -20,12 +20,14 @@ import {
   parseAsString,
   parseAsFloat,
   parseAsBoolean,
+  parseAsStringEnum,
 } from 'nuqs';
 import { LoginDialog } from '@/components/login-dialog';
-import { GenerateDialog } from '@/components/generate';
+import { GenerateDialog } from '@/components/create/generate';
 import type { Session } from 'next-auth';
 import { createStorySchema } from '@/lib/schemas';
-
+import { StoryThemePicker } from '@/components/create/theme';
+import { StoryTheme } from '@prisma/client';
 interface CreateStoryProps extends React.ComponentProps<typeof Card> {
   session: Session | null;
 }
@@ -34,6 +36,9 @@ export function CreateStory({ session, ...props }: CreateStoryProps) {
   const [data, setData] = useQueryStates({
     character: parseAsString.withDefault(''),
     age: parseAsFloat.withDefault(8),
+    theme: parseAsStringEnum<StoryTheme>(Object.values(StoryTheme)).withDefault(
+      StoryTheme.DINOSAURS,
+    ),
     redirect: parseAsBoolean.withDefault(false),
   });
 
@@ -100,6 +105,23 @@ export function CreateStory({ session, ...props }: CreateStoryProps) {
                     </FormControl>
                     <FormDescription>
                       We use this to determine the story&apos;s difficulty
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="theme"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Story Theme</FormLabel>
+                    <FormControl>
+                      <StoryThemePicker field={field} />
+                    </FormControl>
+                    <FormDescription>
+                      Choose what the story should be about.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

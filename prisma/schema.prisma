@@ -17,6 +17,15 @@ enum Status {
     FAILED
 }
 
+enum StoryTheme {
+    DINOSAURS
+    PIRATES
+    PRINCESS
+    SPACE
+    ANIMALS
+    HORROR
+}
+
 model Story {
     id        Int      @id @default(autoincrement())
     createdAt DateTime @default(now())
@@ -29,6 +38,7 @@ model Story {
     
     character  String
     age        Int
+    theme      StoryTheme   @default(DINOSAURS)
 
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String

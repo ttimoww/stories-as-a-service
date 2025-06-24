@@ -20,10 +20,10 @@ export function LoginDialog({ ...props }: LoginDialogProps) {
   const [loading, setLoading] = useState(false);
   const pathname = usePathnameWithParams();
 
-  async function handleLogin() {
+  async function handleLogin(provider: 'google' | 'github') {
     try {
       setLoading(true);
-      await signIn('google', { callbackUrl: pathname });
+      await signIn(provider, { callbackUrl: pathname });
     } catch (error) {
       console.error(error);
       toast.error('Failed to sign in', {
@@ -39,16 +39,20 @@ export function LoginDialog({ ...props }: LoginDialogProps) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Login</DialogTitle>
-          <DialogDescription>
-            Since LLM&apos;s are not free and I don&apos;t want to go bankrupt,
-            please login to continue
-          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-2 md:grid-cols-2">
-          <Button variant="outline" onClick={handleLogin} disabled={loading}>
+          <Button
+            variant="outline"
+            onClick={() => handleLogin('google')}
+            disabled={loading}
+          >
             <Chrome className="size-4" /> Sign in with Google
           </Button>
-          <Button variant="outline" onClick={handleLogin} disabled={loading}>
+          <Button
+            variant="outline"
+            onClick={() => handleLogin('github')}
+            disabled={loading}
+          >
             <Github className="size-4" /> Sign in with Github
           </Button>
         </div>

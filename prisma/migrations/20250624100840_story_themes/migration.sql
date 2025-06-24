@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "StoryTheme" AS ENUM ('DINOSAURS', 'PIRATES', 'PRINCESS', 'SPACE', 'ANIMALS', 'HORROR');
+
+-- AlterTable
+ALTER TABLE "Story" ADD COLUMN     "theme" "StoryTheme" NOT NULL DEFAULT 'DINOSAURS';

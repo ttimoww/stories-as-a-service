@@ -1,8 +1,10 @@
+import { StoryTheme } from '@prisma/client';
 import { z } from 'zod';
 
 export const createStorySchema = z.object({
   character: z.string().min(1).max(16),
   age: z.coerce.number().min(2).max(12),
+  theme: z.nativeEnum(StoryTheme),
 });
 export type CreateStoryData = z.infer<typeof createStorySchema>;
 

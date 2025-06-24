@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from '@/server/api/trpc';
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from '@/server/api/trpc';
 import { createStorySchema } from '@/lib/schemas';
 import { shareToken } from '@/lib/tokens';
 
@@ -12,6 +16,7 @@ export const storyRouter = createTRPCRouter({
         data: {
           age: input.age,
           character: input.character,
+          theme: input.theme,
           createdBy: { connect: { id: ctx.session.user.id } },
         },
       });
@@ -48,9 +53,12 @@ export const storyRouter = createTRPCRouter({
       const payload = shareToken.read(input.token);
 
       if (!payload) {
-        return null
+        return null;
       }
 
-      return ctx.db.story.findUnique({ where: { id: payload.storyId }, include: { createdBy: true } });
+      return ctx.db.story.findUnique({
+        where: { id: payload.storyId },
+        include: { createdBy: true },
+      });
     }),
 });

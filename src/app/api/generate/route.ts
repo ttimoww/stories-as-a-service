@@ -1,3 +1,4 @@
+import { STORY_THEMES } from '@/lib/constants';
 import { generatedStorySchema } from '@/lib/schemas';
 import { auth } from '@/server/auth';
 import { db } from '@/server/db';
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
   const result = streamObject({
     model: openai('gpt-4o'),
     schema: generatedStorySchema,
-    prompt: `Generate a bedtime story about ${story.character} who is ${story.age} years old. It should be fully readable in 20 seconds at a slow pace.`,
+    prompt: `Generate a bedtime story about ${story.character} who is ${story.age} years old. The story should be about ${STORY_THEMES[story.theme].title}. It should be fully readable in 20 seconds at a slow pace.`,
     onFinish: async ({ object }) => {
       if (!object) {
         await db.story.update({
