@@ -1,6 +1,6 @@
 import { auth } from '@/server/auth';
 import { cn } from '@/lib/utils';
-import { Logout } from '@/components/shared/logout';
+import { Logout } from '@/components/global/logout';
 import Link from 'next/link';
 import {
   NavigationMenu,
@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-import { ThemeToggle } from '@/components/shared/theme-toggle';
+import { ThemeToggle } from '@/components/global/theme-toggle';
 
 const links = [
   {

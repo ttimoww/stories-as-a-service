@@ -3,12 +3,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import type { Story } from '@prisma/client';
-
+import { ShareButton } from '@/components/share/share-story-button';
 interface ReadStoryDialogProps extends React.ComponentProps<typeof Button> {
   story: Story;
 }
@@ -28,6 +29,9 @@ export function ReadStoryDialog({ story, ...props }: ReadStoryDialogProps) {
           className="text-foreground leading-7"
           dangerouslySetInnerHTML={{ __html: story.content ?? '' }}
         />
+        <DialogFooter>
+          <ShareButton storyId={story.id}>Share Story</ShareButton>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

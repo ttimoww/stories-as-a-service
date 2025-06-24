@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc';
+import { createTRPCRouter, protectedProcedure, publicProcedure } from '@/server/api/trpc';
 import { createStorySchema } from '@/lib/schemas';
+import { shareToken } from '@/lib/tokens';
 
 export const storyRouter = createTRPCRouter({
   create: protectedProcedure
@@ -27,5 +28,29 @@ export const storyRouter = createTRPCRouter({
       await ctx.db.story.delete({
         where: { id: input, createdById: ctx.session.user.id },
       });
+    }),
+  share: protectedProcedure
+    .input(z.number())
+    .mutation(async ({ ctx, input }) => {
+      const story = await ctx.db.story.findUnique({
+        where: { id: input, createdById: ctx.session.user.id },
+      });
+
+      if (!story) {
+        throw new Error('Story not found');
+      }
+
+      return shareToken.create({ storyId: story.id });
+    }),
+  getByToken: publicProcedure
+    .input(z.object({ token: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const payload = shareToken.read(input.token);
+
+      if (!payload) {
+        return null
+      }
+
+      return ctx.db.story.findUnique({ where: { id: payload.storyId }, include: { createdBy: true } });
     }),
 });

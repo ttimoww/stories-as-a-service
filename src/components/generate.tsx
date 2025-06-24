@@ -12,7 +12,8 @@ import { api } from '@/trpc/react';
 import { useEffect, useState } from 'react';
 import { Loader2Icon } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Button } from '@/components/ui/button';
+import { ShareButton } from '@/components/share/share-story-button';
+import { useSession } from 'next-auth/react';
 
 /**
  * The generation logic and UI is split into its own component so that its state
@@ -38,6 +39,7 @@ interface GenerationProps {
   data: CreateStoryData;
 }
 function Generation({ data }: GenerationProps) {
+  const { data: session } = useSession();
   const [storyId, setStoryId] = useState<number | null>(null);
 
   const createStory = api.story.create.useMutation({
@@ -71,6 +73,13 @@ function Generation({ data }: GenerationProps) {
         <DialogTitle>
           {story?.title ?? <Skeleton className="h-[18px] w-3/4" />}
         </DialogTitle>
+        <DialogDescription>
+          {isLoading ? (
+            <Skeleton className="h-[18px] w-1/2" />
+          ) : (
+            `Created by ${session!.user.name}`
+          )}
+        </DialogDescription>
       </DialogHeader>
       <div className="relative h-[75vh] max-h-[600px]">
         {story?.content ? (
@@ -80,7 +89,7 @@ function Generation({ data }: GenerationProps) {
         )}
       </div>
       <DialogFooter>
-        <Button disabled={!story?.content || isLoading}>Share</Button>
+        {storyId && <ShareButton storyId={storyId}>Share Story</ShareButton>}
       </DialogFooter>
     </>
   );

@@ -8,9 +8,9 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { SessionProvider } from 'next-auth/react';
-import { Header } from '@/components/shared/header';
+import { Header } from '@/components/global/header';
 import { ThemeProvider } from '@/providers/theme-provider';
-import { Footer } from '@/components/shared/footer';
+import { Footer } from '@/components/global/footer';
 
 export const metadata: Metadata = {
   title: 'Story as a Service',

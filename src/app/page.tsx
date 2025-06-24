@@ -1,9 +1,15 @@
 import { CreateStory } from '@/components/create-story';
+import { SharedStoryDialog } from '@/components/share/shared-story-dialog';
 import { auth } from '@/server/auth';
 import Link from 'next/link';
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ share?: string }>;
+}) {
   const session = await auth();
+  const { share } = await searchParams;
 
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-3 p-4">
@@ -23,6 +29,7 @@ export default async function Home() {
           Github
         </Link>
       </p>
+      {share && <SharedStoryDialog token={share} />}
     </main>
   );
 }
