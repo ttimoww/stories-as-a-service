@@ -13,7 +13,7 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import { Footer } from '@/components/global/footer';
 
 export const metadata: Metadata = {
-  title: 'Story as a Service',
+  title: 'Stories as a Service',
   description: 'Generate your own personalized bedtime story in seconds',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 };
