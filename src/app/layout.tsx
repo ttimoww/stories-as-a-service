@@ -48,7 +48,7 @@ export default function RootLayout({
               </NuqsAdapter>
             </TRPCReactProvider>
           </SessionProvider>
-          <Toaster richColors />
+          <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
     </html>

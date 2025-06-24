@@ -4,12 +4,16 @@ import { toast } from 'sonner';
 
 interface ShareButtonProps
   extends Omit<React.ComponentProps<typeof Button>, 'onClick'> {
-  storyId: number;
+  storyId?: number;
 }
 export function ShareButton({ storyId, ...props }: ShareButtonProps) {
+  if (!storyId) {
+    return <Button {...props} disabled />;
+  }
+
   const { mutate, isPending } = api.story.share.useMutation();
 
-  function handleShare() {
+  function handleShare(storyId: number) {
     mutate(storyId, {
       onSuccess: (token) => {
         const url = `${window.location.origin}?share=${token}`;
@@ -21,5 +25,11 @@ export function ShareButton({ storyId, ...props }: ShareButtonProps) {
       },
     });
   }
-  return <Button {...props} onClick={handleShare} disabled={isPending} />;
+  return (
+    <Button
+      {...props}
+      onClick={() => handleShare(storyId)}
+      disabled={isPending}
+    />
+  );
 }

@@ -46,11 +46,7 @@ function Generation({ data }: GenerationProps) {
     onSuccess: (id) => setStoryId(id),
   });
 
-  const {
-    object: story,
-    submit,
-    isLoading,
-  } = experimental_useObject({
+  const { object: story, submit } = experimental_useObject({
     api: storyId ? `/api/generate?storyId=${storyId}` : '',
     schema: generatedStorySchema,
   });
@@ -67,13 +63,21 @@ function Generation({ data }: GenerationProps) {
     }
   }, [storyId]);
 
+  const user = session?.user.name;
+
   return (
     <>
       <DialogHeader>
         <DialogTitle>
           {story?.title ?? <Skeleton className="h-[18px] w-3/4" />}
         </DialogTitle>
-        <DialogDescription>Created by {session!.user.name}</DialogDescription>
+        <DialogDescription>
+          {user ? (
+            `Created by ${user}`
+          ) : (
+            <Skeleton className="h-[18px] w-1/2" />
+          )}
+        </DialogDescription>
       </DialogHeader>
       <div className="relative h-[75vh] max-h-[600px]">
         {story?.content ? (
