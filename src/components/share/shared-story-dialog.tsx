@@ -27,7 +27,9 @@ export async function SharedStoryDialog({ token }: SharedStoryDialogProps) {
             Shared by {story.createdBy.name}
           </DialogDescription>
         </DialogHeader>
-        <p className="text-foreground leading-6">{story.content}</p>
+        <div className="h-[75vh] max-h-[600px] overflow-y-auto">
+          <p className="text-foreground leading-6">{story.content}</p>
+        </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline">Close</Button>

@@ -79,7 +79,7 @@ function Generation({ data }: GenerationProps) {
           )}
         </DialogDescription>
       </DialogHeader>
-      <div className="relative h-[75vh] max-h-[600px]">
+      <div className="relative h-[75vh] max-h-[600px] overflow-y-auto">
         {story?.content ? (
           <p className="text-foreground leading-7">{story?.content}</p>
         ) : (
