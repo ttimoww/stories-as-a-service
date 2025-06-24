@@ -28,7 +28,7 @@ interface GenerateDialogProps
 export function GenerateDialog({ data, ...props }: GenerateDialogProps) {
   return (
     <Dialog {...props}>
-      <DialogContent className="max-h-[80vh] overflow-y-auto">
+      <DialogContent>
         <Generation data={data} {...props} />
       </DialogContent>
     </Dialog>
