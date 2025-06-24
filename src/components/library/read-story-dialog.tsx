@@ -20,7 +20,7 @@ export function ReadStoryDialog({ story, ...props }: ReadStoryDialogProps) {
       <DialogTrigger asChild>
         <Button {...props}>Read Story</Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[80vh]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>{story.title}</DialogTitle>
           <DialogDescription>{story.summary}</DialogDescription>
