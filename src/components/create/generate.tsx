@@ -73,13 +73,7 @@ function Generation({ data }: GenerationProps) {
         <DialogTitle>
           {story?.title ?? <Skeleton className="h-[18px] w-3/4" />}
         </DialogTitle>
-        <DialogDescription>
-          {isLoading ? (
-            <Skeleton className="h-[18px] w-1/2" />
-          ) : (
-            `Created by ${session!.user.name}`
-          )}
-        </DialogDescription>
+        <DialogDescription>Created by {session!.user.name}</DialogDescription>
       </DialogHeader>
       <div className="relative h-[75vh] max-h-[600px]">
         {story?.content ? (
