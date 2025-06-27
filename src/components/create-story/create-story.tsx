@@ -23,11 +23,11 @@ import {
   parseAsStringEnum,
 } from 'nuqs';
 import { LoginDialog } from '@/components/login-dialog';
-import { GenerateDialog } from '@/components/create/generate';
 import type { Session } from 'next-auth';
 import { createStorySchema } from '@/lib/schemas';
-import { StoryThemePicker } from '@/components/create/theme';
 import { StoryTheme } from '@prisma/client';
+import { GenerationDialog } from '@/components/create-story/generation';
+import { ThemeSelection } from '@/components/create-story/theme-selection';
 interface CreateStoryProps extends React.ComponentProps<typeof Card> {
   session: Session | null;
 }
@@ -61,7 +61,7 @@ export function CreateStory({ session, ...props }: CreateStoryProps) {
         <LoginDialog open={data.redirect} onOpenChange={handleCloseDialog} />
       )}
       {session !== null && (
-        <GenerateDialog
+        <GenerationDialog
           open={data.redirect}
           onOpenChange={handleCloseDialog}
           data={data}
@@ -118,7 +118,7 @@ export function CreateStory({ session, ...props }: CreateStoryProps) {
                   <FormItem>
                     <FormLabel>Story Theme</FormLabel>
                     <FormControl>
-                      <StoryThemePicker field={field} />
+                      <ThemeSelection field={field} />
                     </FormControl>
                     <FormDescription>
                       Choose what the story should be about.

@@ -4,13 +4,13 @@ import type { ControllerRenderProps, FieldValues, Path } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { STORY_THEMES } from '@/lib/constants';
 
-interface StoryThemePickerProps<T extends FieldValues> {
+interface ThemeSelectionProps<T extends FieldValues> {
   field: ControllerRenderProps<T, Path<T>>;
 }
 
-export function StoryThemePicker<T extends FieldValues>({
+export function ThemeSelection<T extends FieldValues>({
   field,
-}: StoryThemePickerProps<T>) {
+}: ThemeSelectionProps<T>) {
   const buttonsRef = useRef<Array<HTMLButtonElement | null>>([]);
 
   const setButtonRef =

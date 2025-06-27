@@ -12,7 +12,7 @@ import { api } from '@/trpc/react';
 import { useEffect, useState } from 'react';
 import { Loader2Icon } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ShareButton } from '@/components/share/share-story-button';
+import { ShareButton } from '@/components/share-story/share-story-button';
 import { useSession } from 'next-auth/react';
 
 /**
@@ -21,11 +21,11 @@ import { useSession } from 'next-auth/react';
  * generation and allows the dialog to be reused in multiple contexts.
  */
 
-interface GenerateDialogProps
+interface GenerationDialogProps
   extends Omit<React.ComponentProps<typeof Dialog>, 'children'> {
   data: CreateStoryData;
 }
-export function GenerateDialog({ data, ...props }: GenerateDialogProps) {
+export function GenerationDialog({ data, ...props }: GenerationDialogProps) {
   return (
     <Dialog {...props}>
       <DialogContent>
@@ -81,7 +81,9 @@ function Generation({ data }: GenerationProps) {
       </DialogHeader>
       <div className="relative h-[75vh] max-h-[600px] overflow-y-auto">
         {story?.content ? (
-          <p className="text-foreground leading-7">{story?.content}</p>
+          <p className="text-foreground leading-7 whitespace-pre-line">
+            {story?.content}
+          </p>
         ) : (
           <Loader2Icon className="absolute top-1/2 left-1/2 mx-auto -translate-x-1/2 -translate-y-1/2 animate-spin" />
         )}

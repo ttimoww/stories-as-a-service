@@ -1,5 +1,5 @@
-import { CreateStory } from '@/components/create/create-story';
-import { SharedStoryDialog } from '@/components/share/shared-story-dialog';
+import { CreateStory } from '@/components/create-story/create-story';
+import { SharedStoryDialog } from '@/components/share-story/shared-story-dialog';
 import { auth } from '@/server/auth';
 import Link from 'next/link';
 
