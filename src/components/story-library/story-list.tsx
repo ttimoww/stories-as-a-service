@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { api } from '@/trpc/react';
 import { LoadingOverlay } from '@/components/ui/loading-overlay';
-import { ReadStoryDialog } from '@/components/library/read-story-dialog';
+import { ReadStoryDialog } from '@/components/story-library/read-story-dialog';
 
 interface StoryListProps extends React.HTMLAttributes<HTMLDivElement> {}
 

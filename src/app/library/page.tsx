@@ -1,6 +1,6 @@
+import { StoryList } from '@/components/story-library/story-list';
 import { auth } from '@/server/auth';
 import { redirect } from 'next/navigation';
-import { StoryList } from '@/components/library/story-list';
 
 export default async function HistoryPage() {
   const session = await auth();
